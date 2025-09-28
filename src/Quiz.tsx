@@ -10,6 +10,7 @@ import interpretationGuideData from './data/interpretationGuide.json' with { typ
 import styleDescriptionsData from './data/styleDescriptions.json' with { type: "json" };
 import configData from './data/config.json' with { type: "json" };
 import VersionInfo from './components/VersionInfo';
+import ThemeToggle from './components/ThemeToggle';
 
 interface Question {
   id: number;
@@ -194,17 +195,20 @@ export default function Quiz() {
 
   if (step === 'landing') {
     return (
-      <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
             {language === 'de' ? 'Polyamorie-Stil Assessment' : 'Polyamory Style Assessment'}
           </h1>
-          <button type="button" onClick={toggleLanguage} className="px-3 py-1 bg-blue-100 rounded text-sm">
-            {language === 'de' ? 'EN' : 'DE'}
-          </button>
+          <div className="flex gap-2">
+            <ThemeToggle />
+            <button type="button" onClick={toggleLanguage} className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded text-sm hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors">
+              {language === 'de' ? 'EN' : 'DE'}
+            </button>
+          </div>
         </div>
-        <p className="text-gray-600 mb-6">
-          {language === 'de' 
+        <p className="text-gray-600 dark:text-gray-300 mb-6">
+          {language === 'de'
             ? `Entdecke deinen Polyamorie-Stil durch ${QUESTIONS.length} Fragen basierend auf "The Ethical Slut".`
             : `Discover your polyamory style through ${QUESTIONS.length} questions based on "The Ethical Slut".`
           }
@@ -213,7 +217,7 @@ export default function Quiz() {
           type="button"
           data-testid="start-btn"
           onClick={() => setStep('questions')}
-          className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full bg-blue-600 dark:bg-blue-700 text-white py-3 px-6 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors"
         >
           {language === 'de' ? 'Quiz starten' : 'Start Quiz'}
         </button>
@@ -228,30 +232,33 @@ export default function Quiz() {
     const selectedAnswer = answers[currentQ.id];
 
     return (
-      <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
         <div className="flex justify-between items-center mb-4">
-          <span className="text-sm text-gray-500">
+          <span className="text-sm text-gray-500 dark:text-gray-400">
             {currentQuestion + 1} / {QUESTIONS.length}
           </span>
-          <button type="button" onClick={toggleLanguage} className="px-3 py-1 bg-blue-100 rounded text-sm">
-            {language === 'de' ? 'EN' : 'DE'}
-          </button>
+          <div className="flex gap-2">
+            <ThemeToggle />
+            <button type="button" onClick={toggleLanguage} className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded text-sm hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors">
+              {language === 'de' ? 'EN' : 'DE'}
+            </button>
+          </div>
         </div>
         
-        <div className="w-full bg-gray-200 rounded-full h-2 mb-6">
-          <div 
-            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-6">
+          <div
+            className="bg-blue-600 dark:bg-blue-500 h-2 rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           />
         </div>
 
-        <h2 data-testid="question-text" className="text-xl font-semibold mb-6 text-gray-800">
+        <h2 data-testid="question-text" className="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-100">
           {language === 'de' ? currentQ.textDE : currentQ.textEN}
         </h2>
 
         <div className="space-y-3 mb-6">
           {options.map((option, index) => (
-            <label key={index} className="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+            <label key={index} className="flex items-center p-3 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
               <input
                 type="radio"
                 name="answer"
@@ -261,19 +268,19 @@ export default function Quiz() {
                 className="mr-3 text-blue-600 focus:ring-blue-500"
                 data-testid={`option-${index}`}
               />
-              <span className="text-gray-700">{option}</span>
+              <span className="text-gray-700 dark:text-gray-300">{option}</span>
             </label>
           ))}
         </div>
 
-        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+        {error && <p className="text-red-500 dark:text-red-400 text-sm mb-4">{error}</p>}
 
         <div className="flex justify-between">
           <button
             type="button"
             data-testid="back-btn"
             onClick={handleBack}
-            className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-300"
+            className="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600 transition-colors"
           >
             {language === 'de' ? 'Zurück' : 'Back'}
           </button>
@@ -281,7 +288,7 @@ export default function Quiz() {
             type="button"
             data-testid="next-btn"
             onClick={handleNext}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-6 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors"
           >
             {language === 'de' ? 'Weiter' : 'Next'}
           </button>
@@ -293,23 +300,26 @@ export default function Quiz() {
 
   if (step === 'summary') {
     return (
-      <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
             {language === 'de' ? 'Zusammenfassung' : 'Summary'}
           </h2>
-          <button type="button" onClick={toggleLanguage} className="px-3 py-1 bg-blue-100 rounded text-sm">
-            {language === 'de' ? 'EN' : 'DE'}
-          </button>
+          <div className="flex gap-2">
+            <ThemeToggle />
+            <button type="button" onClick={toggleLanguage} className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded text-sm hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors">
+              {language === 'de' ? 'EN' : 'DE'}
+            </button>
+          </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 max-h-96 overflow-y-auto">
           {QUESTIONS.map((q, index) => (
-            <div key={q.id} className="p-3 border rounded">
-              <p className="font-medium text-sm mb-2">
+            <div key={q.id} className="p-3 border border-gray-200 dark:border-gray-600 rounded bg-gray-50 dark:bg-gray-700">
+              <p className="font-medium text-sm mb-2 text-gray-800 dark:text-gray-200">
                 {index + 1}. {language === 'de' ? q.textDE : q.textEN}
               </p>
-              <p className="text-blue-600 text-sm">
+              <p className="text-blue-600 dark:text-blue-400 text-sm">
                 {options[(answers[q.id] || 1) - 1]}
               </p>
             </div>
@@ -320,7 +330,7 @@ export default function Quiz() {
           type="button"
           data-testid="submit-btn"
           onClick={() => setStep('interpretation')}
-          className="w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="w-full bg-green-600 dark:bg-green-700 text-white py-3 px-6 rounded-lg hover:bg-green-700 dark:hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 dark:focus:ring-green-400 transition-colors"
         >
           {language === 'de' ? 'Auswertung anzeigen' : 'Show Results'}
         </button>
@@ -330,21 +340,24 @@ export default function Quiz() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
           {language === 'de' ? 'Dein Ergebnis' : 'Your Result'}
         </h2>
-        <button onClick={toggleLanguage} className="px-3 py-1 bg-blue-100 rounded text-sm">
-          {language === 'de' ? 'EN' : 'DE'}
-        </button>
+        <div className="flex gap-2">
+          <ThemeToggle />
+          <button onClick={toggleLanguage} className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded text-sm hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors">
+            {language === 'de' ? 'EN' : 'DE'}
+          </button>
+        </div>
       </div>
 
       <div className="text-center mb-6">
-        <div className="inline-flex items-center justify-center w-24 h-24 bg-blue-100 rounded-full mb-4">
-          <span className="text-lg font-bold text-blue-600 text-center px-2">{interpretation.level}</span>
+        <div className="inline-flex items-center justify-center w-24 h-24 bg-blue-100 dark:bg-blue-900 rounded-full mb-4">
+          <span className="text-lg font-bold text-blue-600 dark:text-blue-300 text-center px-2">{interpretation.level}</span>
         </div>
-        <p className="text-gray-700 mb-4">
+        <p className="text-gray-700 dark:text-gray-300 mb-4">
           {language === 'de' ? interpretation.adviceDE : interpretation.adviceEN}
         </p>
         
