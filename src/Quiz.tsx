@@ -117,7 +117,7 @@ export default function Quiz() {
   const debouncedSave = useCallback(() => {
     if (saveTimeout) clearTimeout(saveTimeout);
     setSaveTimeout(setTimeout(saveToStorage, 300));
-  }, [saveToStorage, saveTimeout]);
+  }, [saveToStorage]);
 
   useEffect(() => {
     try {
@@ -138,6 +138,13 @@ export default function Quiz() {
     if (step !== 'landing') debouncedSave();
   }, [step, currentQuestion, answers, language, debouncedSave]);
 
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (saveTimeout) clearTimeout(saveTimeout);
+    };
+  }, [saveTimeout]);
+
   const scores = useMemo((): ScoreResult => {
     const result: ScoreResult = {
       hierarchical: 0, nonHierarchical: 0, kitchenTable: 0, parallel: 0,
@@ -154,6 +161,19 @@ export default function Quiz() {
   }, [answers]);
 
   const interpretation = useMemo(() => getInterpretation(scores), [scores]);
+
+  // Memoize tooltip handlers to prevent unnecessary re-renders
+  const handleTooltipEnter = useCallback((category: string) => {
+    setActiveTooltip(category);
+  }, []);
+
+  const handleTooltipLeave = useCallback(() => {
+    setActiveTooltip(null);
+  }, []);
+
+  const handleTooltipClick = useCallback((category: string) => {
+    setActiveTooltip(activeTooltip === category ? null : category);
+  }, [activeTooltip]);
 
   const handleAnswer = (optionIndex: number) => {
     setAnswers(prev => ({ ...prev, [QUESTIONS[currentQuestion].id]: optionIndex + 1 }));
@@ -381,9 +401,9 @@ export default function Quiz() {
               <div
                 key={category}
                 className="bg-gray-50 p-3 rounded relative group cursor-help transition-all hover:bg-gray-100"
-                onClick={() => setActiveTooltip(activeTooltip === category ? null : category)}
-                onMouseEnter={() => setActiveTooltip(category)}
-                onMouseLeave={() => setActiveTooltip(null)}
+                onClick={() => handleTooltipClick(category)}
+                onMouseEnter={() => handleTooltipEnter(category)}
+                onMouseLeave={handleTooltipLeave}
               >
                 <div className="flex items-center justify-between">
                   <div className="font-medium">{formatName(category)}</div>
