@@ -5,10 +5,12 @@
 'use client';
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import questionsData from './data/questions.json' with { type: "json" };
+import polyTypeQuestionsData from './data/polyTypeQuestions.json' with { type: "json" };
+import bindingTypeQuestionsData from './data/bindingTypeQuestions.json' with { type: "json" };
 import interpretationGuideData from './data/interpretationGuide.json' with { type: "json" };
 import styleDescriptionsData from './data/styleDescriptions.json' with { type: "json" };
-import configData from './data/config.json' with { type: "json" };
+import polyTypeConfigData from './data/polyTypeConfig.json' with { type: "json" };
+import bindingTypeConfigData from './data/bindingTypeConfig.json' with { type: "json" };
 import VersionInfo from './components/VersionInfo';
 import ThemeToggle from './components/ThemeToggle';
 
@@ -19,100 +21,206 @@ interface Question {
   weight: number;
 }
 
-interface ScoreResult {
-  hierarchical: number;
-  nonHierarchical: number;
-  kitchenTable: number;
-  parallel: number;
+interface PolyTypeResult {
+  openRelationship: number;
+  swinging: number;
+  hierarchicalPoly: number;
+  nonHierarchicalPoly: number;
+  polyfidelity: number;
   soloPoly: number;
-  relationshipEscalator: number;
-  fluidBonding: number;
-  saferSex: number;
+  kitchenTable: number;
+  parallelPoly: number;
+  relationshipAnarchy: number;
 }
 
+interface BindingTypeResult {
+  fluidBonding: number;
+  bodyFluidMonogamy: number;
+  saferSexProtocols: number;
+  nestingPartner: number;
+  anchorPartner: number;
+  abundanceMindset: number;
+  scarcityMindset: number;
+}
+
+interface ScoreResult extends PolyTypeResult, BindingTypeResult {}
+
 type Language = 'de' | 'en';
-type Step = 'landing' | 'questions' | 'summary' | 'interpretation';
+type Step = 'landing' | 'polyQuestions' | 'bindingQuestions' | 'summary' | 'interpretation';
+type QuizSection = 'poly' | 'binding';
 
-const QUESTIONS: Question[] = questionsData;
+const POLY_QUESTIONS: Question[] = polyTypeQuestionsData;
+const BINDING_QUESTIONS: Question[] = bindingTypeQuestionsData;
 
-const OPTIONS_DE = configData.options.de;
-const OPTIONS_EN = configData.options.en;
+const POLY_OPTIONS_DE = polyTypeConfigData.options.de;
+const POLY_OPTIONS_EN = polyTypeConfigData.options.en;
+const BINDING_OPTIONS_DE = bindingTypeConfigData.options.de;
+const BINDING_OPTIONS_EN = bindingTypeConfigData.options.en;
 
-const SCORING_MAP: Record<string, number[]> = configData.scoringMap;
+const POLY_SCORING_MAP: Record<string, number[]> = polyTypeConfigData.scoringMap;
+const BINDING_SCORING_MAP: Record<string, number[]> = bindingTypeConfigData.scoringMap;
 
 const INTERPRETATION_GUIDE = interpretationGuideData;
 
 const STYLE_DESCRIPTIONS: Record<string, { de: string; en: string }> = styleDescriptionsData;
 
 export function getInterpretation(scores: ScoreResult): { level: string; adviceDE: string; adviceEN: string } {
-  const max = Math.max(...Object.values(scores));
-  const topStyle = Object.entries(scores).find(([_, score]) => score === max)?.[0] || 'balanced';
-  
+  // Calculate highest poly type score
+  const polyScores = {
+    openRelationship: scores.openRelationship,
+    swinging: scores.swinging,
+    hierarchicalPoly: scores.hierarchicalPoly,
+    nonHierarchicalPoly: scores.nonHierarchicalPoly,
+    polyfidelity: scores.polyfidelity,
+    soloPoly: scores.soloPoly,
+    kitchenTable: scores.kitchenTable,
+    parallelPoly: scores.parallelPoly,
+    relationshipAnarchy: scores.relationshipAnarchy
+  };
+  const maxPolyScore = Math.max(...Object.values(polyScores));
+  const topPolyStyle = Object.entries(polyScores).find(([_, score]) => score === maxPolyScore)?.[0] || 'balanced';
+
+  // Calculate highest binding type score
+  const bindingScores = {
+    fluidBonding: scores.fluidBonding,
+    bodyFluidMonogamy: scores.bodyFluidMonogamy,
+    saferSexProtocols: scores.saferSexProtocols,
+    nestingPartner: scores.nestingPartner,
+    anchorPartner: scores.anchorPartner,
+    abundanceMindset: scores.abundanceMindset,
+    scarcityMindset: scores.scarcityMindset
+  };
+  const maxBindingScore = Math.max(...Object.values(bindingScores));
+  const topBindingStyle = Object.entries(bindingScores).find(([_, score]) => score === maxBindingScore)?.[0] || 'balanced';
+
   const interpretations: Record<string, { level: string; adviceDE: string; adviceEN: string }> = {
-    hierarchical: { 
-      level: "Hierarchisch", 
-      adviceDE: "Du bevorzugst klare Beziehungsstrukturen mit Hauptpartnern und strukturierten Verpflichtungen.", 
-      adviceEN: "You prefer clear relationship structures with primary partners and structured commitments." 
+    openRelationship: {
+      level: "Offene Beziehung",
+      adviceDE: "Du bevorzugst eine primäre Partnerschaft mit Freiheit für sexuelle Beziehungen außerhalb.",
+      adviceEN: "You prefer a primary partnership with freedom for sexual relationships outside."
     },
-    nonHierarchical: { 
-      level: "Nicht-Hierarchisch", 
-      adviceDE: "Du bevorzugst Gleichberechtigung unter Beziehungen und widersetzte dich auferlegten Hierarchien.", 
-      adviceEN: "You prefer equality among relationships and resist imposed hierarchies." 
+    swinging: {
+      level: "Swinging",
+      adviceDE: "Du genießt Freizeitsex mit anderen Paaren in sozialen oder Gruppeneinstellungen.",
+      adviceEN: "You enjoy recreational sex with other couples in social or group settings."
     },
-    kitchenTable: { 
-      level: "Küchentisch", 
-      adviceDE: "Du genießt vernetzte Beziehungen und Gemeinschaft mit hoher Integration aller Partner.", 
-      adviceEN: "You enjoy interconnected relationships and community with high integration of all partners." 
+    hierarchicalPoly: {
+      level: "Hierarchische Polyamorie",
+      adviceDE: "Du bevorzugst klare Beziehungsstrukturen mit Primär-, Sekundär- und Tertiärpartnern.",
+      adviceEN: "You prefer clear relationship structures with primary, secondary, and tertiary partners."
     },
-    parallel: { 
-      level: "Parallel", 
-      adviceDE: "Du bevorzugst unabhängige Beziehungen mit minimaler Überschneidung zwischen Partnern.", 
-      adviceEN: "You prefer independent relationships with minimal overlap between partners." 
+    nonHierarchicalPoly: {
+      level: "Nicht-Hierarchische Poly",
+      adviceDE: "Du bevorzugst Gleichberechtigung unter Beziehungen ohne festgelegte Rangordnung.",
+      adviceEN: "You prefer equality among relationships without predetermined ranking."
     },
-    soloPoly: { 
-      level: "Solo-Poly", 
-      adviceDE: "Du priorisierst Autonomie und persönliche Unabhängigkeit in allen Beziehungen.", 
-      adviceEN: "You prioritize autonomy and personal independence in all relationships." 
+    polyfidelity: {
+      level: "Polyfidelität",
+      adviceDE: "Du bevorzugst geschlossene Gruppen, in denen alle Partner nur innerhalb der Gruppe intim sind.",
+      adviceEN: "You prefer closed groups where all partners remain intimate only within the group."
     },
-    relationshipEscalator: { 
-      level: "Beziehungsrolltreppe", 
-      adviceDE: "Du fühlst dich zu traditionellen Beziehungsmeilensteinen und Eskalationsmustern hingezogen.", 
-      adviceEN: "You're drawn to traditional relationship milestones and escalation patterns." 
+    kitchenTable: {
+      level: "Küchentisch",
+      adviceDE: "Du genießt vernetzte Beziehungen und Gemeinschaft mit hoher Integration aller Partner.",
+      adviceEN: "You enjoy interconnected relationships and community with high integration of all partners."
     },
-    fluidBonding: { 
-      level: "Fluid-Bindung", 
-      adviceDE: "Du fühlst dich zu intimen körperlichen und emotionalen Bindungen hingezogen.", 
-      adviceEN: "You're drawn to intimate physical and emotional bonds." 
+    parallelPoly: {
+      level: "Parallele Polyamorie",
+      adviceDE: "Du bevorzugst unabhängige Beziehungen mit minimaler Überschneidung zwischen Partnern.",
+      adviceEN: "You prefer independent relationships with minimal overlap between partners."
     },
-    saferSex: { 
-      level: "Safer Sex", 
-      adviceDE: "Du priorisierst Sicherheit, Grenzen und Unabhängigkeit in intimen Beziehungen.", 
-      adviceEN: "You prioritize safety, boundaries and independence in intimate relationships." 
+    soloPoly: {
+      level: "Solo-Poly",
+      adviceDE: "Du priorisierst Autonomie und persönliche Unabhängigkeit in allen Beziehungen.",
+      adviceEN: "You prioritize autonomy and personal independence in all relationships."
+    },
+    relationshipAnarchy: {
+      level: "Beziehungsanarchie",
+      adviceDE: "Du lehnst gesellschaftliche Konstrukte ab und lässt Beziehungen ohne Regeln fließen.",
+      adviceEN: "You reject social constructs and let relationships flow without rules."
+    },
+    fluidBonding: {
+      level: "Fluid-Bindung",
+      adviceDE: "Du fühlst dich zu intimen körperlichen und emotionalen Bindungen hingezogen.",
+      adviceEN: "You're drawn to intimate physical and emotional bonds."
+    },
+    bodyFluidMonogamy: {
+      level: "Körperflüssigkeit-Monogamie",
+      adviceDE: "Du begrenzt den Austausch von Körperflüssigkeiten auf bestimmte Partner.",
+      adviceEN: "You limit bodily fluid exchange to specific partners."
+    },
+    saferSexProtocols: {
+      level: "Safer-Sex-Protokolle",
+      adviceDE: "Du nutzt konsequent Barrieren und Schutzmaßnahmen mit allen Partnern.",
+      adviceEN: "You consistently use barriers and protective measures with all partners."
+    },
+    nestingPartner: {
+      level: "Nesting-Partner",
+      adviceDE: "Du bevorzugst einen Partner, mit dem du zusammenlebst und den Alltag teilst.",
+      adviceEN: "You prefer a partner you live with and share daily life."
+    },
+    anchorPartner: {
+      level: "Anker-Partner",
+      adviceDE: "Du suchst emotionale Erdung und langfristige Partnerschaft für Stabilität.",
+      adviceEN: "You seek emotional grounding and long-term partnership for stability."
+    },
+    abundanceMindset: {
+      level: "Fülle-Mentalität",
+      adviceDE: "Du glaubst, dass Liebe und Intimität unbegrenzt sind und durch Teilen wachsen.",
+      adviceEN: "You believe love and intimacy are unlimited and grow through sharing."
+    },
+    scarcityMindset: {
+      level: "Knappheits-Mentalität",
+      adviceDE: "Du siehst Liebe und Intimität als begrenzte Ressourcen, die geschützt werden müssen.",
+      adviceEN: "You see love and intimacy as limited resources that must be protected."
+    },
+    balanced: {
+      level: "Ausgewogen",
+      adviceDE: "Du zeigst einen ausgewogenen Ansatz zu Beziehungen.",
+      adviceEN: "You show a balanced approach to relationships."
     }
   };
-  
-  return interpretations[topStyle] || { level: "Ausgewogen", adviceDE: "Du zeigst einen ausgewogenen Ansatz zur Polyamorie.", adviceEN: "You show a balanced approach to polyamory." };
+
+  // Combine top poly and binding styles
+  const polyInterpretation = interpretations[topPolyStyle];
+  const bindingInterpretation = interpretations[topBindingStyle];
+
+  return {
+    level: `${polyInterpretation?.level || 'Ausgewogen'} + ${bindingInterpretation?.level || 'Ausgewogen'}`,
+    adviceDE: `${polyInterpretation?.adviceDE || 'Du zeigst einen ausgewogenen Ansatz zur Polyamorie.'} ${bindingInterpretation?.adviceDE || ''}`,
+    adviceEN: `${polyInterpretation?.adviceEN || 'You show a balanced approach to polyamory.'} ${bindingInterpretation?.adviceEN || ''}`
+  };
 }
 
 export default function Quiz() {
   const [language, setLanguage] = useState<Language>('de');
   const [step, setStep] = useState<Step>('landing');
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<Record<number, number>>({});
+  const [currentSection, setCurrentSection] = useState<QuizSection>('poly');
+  const [polyAnswers, setPolyAnswers] = useState<Record<number, number>>({});
+  const [bindingAnswers, setBindingAnswers] = useState<Record<number, number>>({});
   const [error, setError] = useState('');
   const [saveTimeout, setSaveTimeout] = useState<number | null>(null);
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
   const [showExtendedInterpretation, setShowExtendedInterpretation] = useState(false);
 
-  const options = language === 'de' ? OPTIONS_DE : OPTIONS_EN;
+  const getCurrentQuestions = () => currentSection === 'poly' ? POLY_QUESTIONS : BINDING_QUESTIONS;
+  const getCurrentAnswers = () => currentSection === 'poly' ? polyAnswers : bindingAnswers;
+  const getCurrentOptions = () => {
+    if (currentSection === 'poly') {
+      return language === 'de' ? POLY_OPTIONS_DE : POLY_OPTIONS_EN;
+    } else {
+      return language === 'de' ? BINDING_OPTIONS_DE : BINDING_OPTIONS_EN;
+    }
+  };
 
   const saveToStorage = useCallback(() => {
     try {
-      localStorage.setItem('quiz-state', JSON.stringify({ step, currentQuestion, answers, language }));
+      localStorage.setItem('quiz-state', JSON.stringify({ step, currentQuestion, currentSection, polyAnswers, bindingAnswers, language }));
     } catch (e) {
       console.warn('Failed to save to localStorage:', e);
     }
-  }, [step, currentQuestion, answers, language]);
+  }, [step, currentQuestion, currentSection, polyAnswers, bindingAnswers, language]);
 
   const debouncedSave = useCallback(() => {
     if (saveTimeout) clearTimeout(saveTimeout);
@@ -123,10 +231,12 @@ export default function Quiz() {
     try {
       const saved = localStorage.getItem('quiz-state');
       if (saved) {
-        const { step: savedStep, currentQuestion: savedQ, answers: savedAnswers, language: savedLang } = JSON.parse(saved);
+        const { step: savedStep, currentQuestion: savedQ, currentSection: savedSection, polyAnswers: savedPolyAnswers, bindingAnswers: savedBindingAnswers, language: savedLang } = JSON.parse(saved);
         setStep(savedStep);
         setCurrentQuestion(savedQ);
-        setAnswers(savedAnswers);
+        setCurrentSection(savedSection || 'poly');
+        setPolyAnswers(savedPolyAnswers || {});
+        setBindingAnswers(savedBindingAnswers || {});
         setLanguage(savedLang);
       }
     } catch (e) {
@@ -136,7 +246,7 @@ export default function Quiz() {
 
   useEffect(() => {
     if (step !== 'landing') debouncedSave();
-  }, [step, currentQuestion, answers, language, debouncedSave]);
+  }, [step, currentQuestion, currentSection, polyAnswers, bindingAnswers, language, debouncedSave]);
 
   // Cleanup timeout on unmount
   useEffect(() => {
@@ -147,18 +257,29 @@ export default function Quiz() {
 
   const scores = useMemo((): ScoreResult => {
     const result: ScoreResult = {
-      hierarchical: 0, nonHierarchical: 0, kitchenTable: 0, parallel: 0,
-      soloPoly: 0, relationshipEscalator: 0, fluidBonding: 0, saferSex: 0
+      openRelationship: 0, swinging: 0, hierarchicalPoly: 0, nonHierarchicalPoly: 0,
+      polyfidelity: 0, soloPoly: 0, kitchenTable: 0, parallelPoly: 0,
+      relationshipAnarchy: 0, fluidBonding: 0, bodyFluidMonogamy: 0,
+      saferSexProtocols: 0, nestingPartner: 0, anchorPartner: 0,
+      abundanceMindset: 0, scarcityMindset: 0
     };
-    
-    Object.entries(SCORING_MAP).forEach(([category, questionIds]) => {
-      result[category as keyof ScoreResult] = questionIds.reduce((sum, qId) => 
-        sum + (answers[qId] || 0), 0
+
+    // Calculate poly type scores
+    Object.entries(POLY_SCORING_MAP).forEach(([category, questionIds]) => {
+      result[category as keyof PolyTypeResult] = questionIds.reduce((sum, qId) =>
+        sum + (polyAnswers[qId] || 0), 0
       );
     });
-    
+
+    // Calculate binding type scores
+    Object.entries(BINDING_SCORING_MAP).forEach(([category, questionIds]) => {
+      result[category as keyof BindingTypeResult] = questionIds.reduce((sum, qId) =>
+        sum + (bindingAnswers[qId] || 0), 0
+      );
+    });
+
     return result;
-  }, [answers]);
+  }, [polyAnswers, bindingAnswers]);
 
   const interpretation = useMemo(() => getInterpretation(scores), [scores]);
 
@@ -176,20 +297,37 @@ export default function Quiz() {
   }, [activeTooltip]);
 
   const handleAnswer = (optionIndex: number) => {
-    setAnswers(prev => ({ ...prev, [QUESTIONS[currentQuestion].id]: optionIndex + 1 }));
+    const currentQuestions = getCurrentQuestions();
+    const questionId = currentQuestions[currentQuestion].id;
+
+    if (currentSection === 'poly') {
+      setPolyAnswers(prev => ({ ...prev, [questionId]: optionIndex + 1 }));
+    } else {
+      setBindingAnswers(prev => ({ ...prev, [questionId]: optionIndex + 1 }));
+    }
     setError('');
   };
 
   const handleNext = () => {
-    if (!answers[QUESTIONS[currentQuestion].id]) {
+    const currentQuestions = getCurrentQuestions();
+    const currentAnswers = getCurrentAnswers();
+
+    if (!currentAnswers[currentQuestions[currentQuestion].id]) {
       setError(language === 'de' ? 'Bitte wähle eine Antwort.' : 'Please select an answer.');
       return;
     }
-    
-    if (currentQuestion < QUESTIONS.length - 1) {
+
+    if (currentQuestion < currentQuestions.length - 1) {
       setCurrentQuestion(prev => prev + 1);
     } else {
-      setStep('summary');
+      // Move to next section or summary
+      if (currentSection === 'poly') {
+        setCurrentSection('binding');
+        setCurrentQuestion(0);
+        setStep('bindingQuestions');
+      } else {
+        setStep('summary');
+      }
     }
     setError('');
   };
@@ -198,7 +336,14 @@ export default function Quiz() {
     if (currentQuestion > 0) {
       setCurrentQuestion(prev => prev - 1);
     } else {
-      setStep('landing');
+      // Go back to previous section or landing
+      if (currentSection === 'binding') {
+        setCurrentSection('poly');
+        setCurrentQuestion(POLY_QUESTIONS.length - 1);
+        setStep('polyQuestions');
+      } else {
+        setStep('landing');
+      }
     }
     setError('');
   };
@@ -206,7 +351,9 @@ export default function Quiz() {
   const restart = () => {
     setStep('landing');
     setCurrentQuestion(0);
-    setAnswers({});
+    setCurrentSection('poly');
+    setPolyAnswers({});
+    setBindingAnswers({});
     setError('');
     localStorage.removeItem('quiz-state');
   };
@@ -229,34 +376,67 @@ export default function Quiz() {
         </div>
         <p className="text-gray-600 dark:text-gray-300 mb-6">
           {language === 'de'
-            ? `Entdecke deinen Polyamorie-Stil durch ${QUESTIONS.length} Fragen basierend auf "The Ethical Slut".`
-            : `Discover your polyamory style through ${QUESTIONS.length} questions based on "The Ethical Slut".`
+            ? `Entdecke deinen Polyamorie-Stil und deine Bindungspräferenzen durch ${POLY_QUESTIONS.length + BINDING_QUESTIONS.length} Fragen in zwei Abschnitten basierend auf "The Ethical Slut".`
+            : `Discover your polyamory style and bonding preferences through ${POLY_QUESTIONS.length + BINDING_QUESTIONS.length} questions in two sections based on "The Ethical Slut".`
           }
         </p>
-        <button
-          type="button"
-          data-testid="start-btn"
-          onClick={() => setStep('questions')}
-          className="w-full bg-blue-600 dark:bg-blue-700 text-white py-3 px-6 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors"
-        >
-          {language === 'de' ? 'Quiz starten' : 'Start Quiz'}
-        </button>
+        <div className="space-y-4">
+          <div className="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg">
+            <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
+              {language === 'de' ? 'Abschnitt 1: Beziehungsstrukturen' : 'Section 1: Relationship Structures'}
+            </h3>
+            <p className="text-blue-800 dark:text-blue-200 text-sm">
+              {language === 'de'
+                ? `${POLY_QUESTIONS.length} Fragen über Hierarchien, Kommunikation und Autonomie`
+                : `${POLY_QUESTIONS.length} questions about hierarchies, communication, and autonomy`
+              }
+            </p>
+          </div>
+          <div className="bg-green-50 dark:bg-green-900 p-4 rounded-lg">
+            <h3 className="font-semibold text-green-900 dark:text-green-100 mb-2">
+              {language === 'de' ? 'Abschnitt 2: Bindungspräferenzen' : 'Section 2: Bonding Preferences'}
+            </h3>
+            <p className="text-green-800 dark:text-green-200 text-sm">
+              {language === 'de'
+                ? `${BINDING_QUESTIONS.length} Fragen über Intimität, Körperlichkeit und emotionale Verbindungen`
+                : `${BINDING_QUESTIONS.length} questions about intimacy, physicality, and emotional connections`
+              }
+            </p>
+          </div>
+          <button
+            type="button"
+            data-testid="start-btn"
+            onClick={() => { setStep('polyQuestions'); setCurrentSection('poly'); }}
+            className="w-full bg-blue-600 dark:bg-blue-700 text-white py-3 px-6 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors"
+          >
+            {language === 'de' ? 'Quiz starten' : 'Start Quiz'}
+          </button>
+        </div>
         <VersionInfo />
       </div>
     );
   }
 
-  if (step === 'questions') {
-    const progress = ((currentQuestion + 1) / QUESTIONS.length) * 100;
-    const currentQ = QUESTIONS[currentQuestion];
-    const selectedAnswer = answers[currentQ.id];
+  if (step === 'polyQuestions' || step === 'bindingQuestions') {
+    const currentQuestions = getCurrentQuestions();
+    const currentAnswers = getCurrentAnswers();
+    const options = getCurrentOptions();
+    const progress = ((currentQuestion + 1) / currentQuestions.length) * 100;
+    const currentQ = currentQuestions[currentQuestion];
+    const selectedAnswer = currentAnswers[currentQ.id];
+
+    const sectionTitle = currentSection === 'poly'
+      ? (language === 'de' ? 'Beziehungsstrukturen' : 'Relationship Structures')
+      : (language === 'de' ? 'Bindungspräferenzen' : 'Bonding Preferences');
 
     return (
       <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
         <div className="flex justify-between items-center mb-4">
-          <span className="text-sm text-gray-500 dark:text-gray-400">
-            {currentQuestion + 1} / {QUESTIONS.length}
-          </span>
+          <div>
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              {sectionTitle} • {currentQuestion + 1} / {currentQuestions.length}
+            </span>
+          </div>
           <div className="flex gap-2">
             <ThemeToggle />
             <button type="button" onClick={toggleLanguage} className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded text-sm hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors">
@@ -264,10 +444,10 @@ export default function Quiz() {
             </button>
           </div>
         </div>
-        
+
         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-6">
           <div
-            className="bg-blue-600 dark:bg-blue-500 h-2 rounded-full transition-all duration-300"
+            className={`h-2 rounded-full transition-all duration-300 ${currentSection === 'poly' ? 'bg-blue-600 dark:bg-blue-500' : 'bg-green-600 dark:bg-green-500'}`}
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -308,9 +488,18 @@ export default function Quiz() {
             type="button"
             data-testid="next-btn"
             onClick={handleNext}
-            className="px-6 py-2 bg-blue-600 dark:bg-blue-700 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors"
+            className={`px-6 py-2 text-white rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+              currentSection === 'poly'
+                ? 'bg-blue-600 dark:bg-blue-700 hover:bg-blue-700 dark:hover:bg-blue-600 focus:ring-blue-500 dark:focus:ring-blue-400'
+                : 'bg-green-600 dark:bg-green-700 hover:bg-green-700 dark:hover:bg-green-600 focus:ring-green-500 dark:focus:ring-green-400'
+            }`}
           >
-            {language === 'de' ? 'Weiter' : 'Next'}
+            {currentQuestion === currentQuestions.length - 1
+              ? (currentSection === 'poly'
+                  ? (language === 'de' ? 'Zu Bindungsfragen' : 'To Bonding Questions')
+                  : (language === 'de' ? 'Zur Zusammenfassung' : 'To Summary'))
+              : (language === 'de' ? 'Weiter' : 'Next')
+            }
           </button>
         </div>
         <VersionInfo />
@@ -319,6 +508,10 @@ export default function Quiz() {
   }
 
   if (step === 'summary') {
+    const allQuestions = [...POLY_QUESTIONS, ...BINDING_QUESTIONS];
+    const allAnswers = { ...polyAnswers, ...bindingAnswers };
+    const options = language === 'de' ? POLY_OPTIONS_DE : POLY_OPTIONS_EN; // Using poly options as they're the same
+
     return (
       <div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
         <div className="flex justify-between items-center mb-6">
@@ -332,15 +525,15 @@ export default function Quiz() {
             </button>
           </div>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 max-h-96 overflow-y-auto">
-          {QUESTIONS.map((q, index) => (
+          {allQuestions.map((q, index) => (
             <div key={q.id} className="p-3 border border-gray-200 dark:border-gray-600 rounded bg-gray-50 dark:bg-gray-700">
               <p className="font-medium text-sm mb-2 text-gray-800 dark:text-gray-200">
                 {index + 1}. {language === 'de' ? q.textDE : q.textEN}
               </p>
               <p className="text-blue-600 dark:text-blue-400 text-sm">
-                {options[(answers[q.id] || 1) - 1]}
+                {options[(allAnswers[q.id] || 1) - 1]}
               </p>
             </div>
           ))}
@@ -367,52 +560,69 @@ export default function Quiz() {
         </h2>
         <div className="flex gap-2">
           <ThemeToggle />
-          <button onClick={toggleLanguage} className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded text-sm hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors">
+          <button type="button" onClick={toggleLanguage} className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded text-sm hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors">
             {language === 'de' ? 'EN' : 'DE'}
           </button>
         </div>
       </div>
 
       <div className="text-center mb-6">
-        <div className="inline-flex items-center justify-center w-24 h-24 bg-blue-100 dark:bg-blue-900 rounded-full mb-4">
-          <span className="text-lg font-bold text-blue-600 dark:text-blue-300 text-center px-2">{interpretation.level}</span>
+        <div className="inline-flex items-center justify-center w-32 h-32 bg-gradient-to-br from-blue-100 to-green-100 dark:from-blue-900 dark:to-green-900 rounded-full mb-4">
+          <span className="text-sm font-bold text-blue-600 dark:text-blue-300 text-center px-2">{interpretation.level}</span>
         </div>
         <p className="text-gray-700 dark:text-gray-300 mb-4">
           {language === 'de' ? interpretation.adviceDE : interpretation.adviceEN}
         </p>
-        
+
         <div className="grid grid-cols-2 gap-4 text-sm">
           {Object.entries(scores).map(([category, score]) => {
             const formatName = (name: string) => {
               const nameMap: Record<string, string> = {
-                hierarchical: 'Hierarchical',
-                nonHierarchical: 'Non-Hierarchical',
-                kitchenTable: 'Kitchen Table',
-                parallel: 'Parallel',
+                openRelationship: 'Open Relationship',
+                swinging: 'Swinging',
+                hierarchicalPoly: 'Hierarchical Poly',
+                nonHierarchicalPoly: 'Non-Hierarchical Poly',
+                polyfidelity: 'Polyfidelity',
                 soloPoly: 'Solo-Poly',
-                relationshipEscalator: 'Relationship Escalator',
+                kitchenTable: 'Kitchen Table',
+                parallelPoly: 'Parallel Poly',
+                relationshipAnarchy: 'Relationship Anarchy',
                 fluidBonding: 'Fluid Bonding',
-                saferSex: 'Safer Sex'
+                bodyFluidMonogamy: 'Body Fluid Monogamy',
+                saferSexProtocols: 'Safer Sex Protocols',
+                nestingPartner: 'Nesting Partner',
+                anchorPartner: 'Anchor Partner',
+                abundanceMindset: 'Abundance Mindset',
+                scarcityMindset: 'Scarcity Mindset'
               };
               return nameMap[name] || name;
             };
 
+            const isPolyType = ['openRelationship', 'swinging', 'hierarchicalPoly', 'nonHierarchicalPoly', 'polyfidelity', 'soloPoly', 'kitchenTable', 'parallelPoly', 'relationshipAnarchy'].includes(category);
+            const maxScore = isPolyType ? POLY_QUESTIONS.length * 5 : BINDING_QUESTIONS.length * 5;
+
             return (
               <div
                 key={category}
-                className="bg-gray-50 p-3 rounded relative group cursor-help transition-all hover:bg-gray-100"
+                className={`p-3 rounded relative group cursor-help transition-all hover:bg-gray-100 dark:hover:bg-gray-700 ${
+                  isPolyType ? 'bg-blue-50 dark:bg-blue-900' : 'bg-green-50 dark:bg-green-900'
+                }`}
                 onClick={() => handleTooltipClick(category)}
                 onMouseEnter={() => handleTooltipEnter(category)}
                 onMouseLeave={handleTooltipLeave}
               >
                 <div className="flex items-center justify-between">
-                  <div className="font-medium">{formatName(category)}</div>
+                  <div className={`font-medium ${isPolyType ? 'text-blue-900 dark:text-blue-100' : 'text-green-900 dark:text-green-100'}`}>
+                    {formatName(category)}
+                  </div>
                   <svg className="w-4 h-4 text-gray-400 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <div className="text-blue-600 font-bold">{score}/50</div>
-                {activeTooltip === category && (
+                <div className={`font-bold ${isPolyType ? 'text-blue-600 dark:text-blue-400' : 'text-green-600 dark:text-green-400'}`}>
+                  {score}/{maxScore}
+                </div>
+                {activeTooltip === category && STYLE_DESCRIPTIONS[category] && (
                   <div className="absolute z-20 bg-gray-900 text-white text-xs rounded-lg p-3 w-64 bottom-full mb-2 left-0 md:bottom-auto md:-top-2 md:left-full md:ml-2 md:mb-0">
                     <div className="relative">
                       {language === 'de' ? STYLE_DESCRIPTIONS[category].de : STYLE_DESCRIPTIONS[category].en}
@@ -430,7 +640,7 @@ export default function Quiz() {
         <button
           type="button"
           onClick={() => setShowExtendedInterpretation(!showExtendedInterpretation)}
-          className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="flex-1 bg-blue-600 dark:bg-blue-700 text-white py-3 px-6 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors"
         >
           {showExtendedInterpretation
             ? (language === 'de' ? 'Weniger Details' : 'Show Less')
@@ -440,7 +650,7 @@ export default function Quiz() {
           type="button"
           data-testid="restart-btn"
           onClick={restart}
-          className="flex-1 bg-gray-600 text-white py-3 px-6 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+          className="flex-1 bg-gray-600 dark:bg-gray-700 text-white py-3 px-6 rounded-lg hover:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-600 transition-colors"
         >
           {language === 'de' ? 'Neu starten' : 'Restart'}
         </button>
@@ -448,27 +658,27 @@ export default function Quiz() {
 
       {showExtendedInterpretation && (
         <div className="mt-8 space-y-8 border-t pt-8">
-          <h3 className="text-2xl font-bold text-gray-800">
+          <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
             {language === 'de' ? INTERPRETATION_GUIDE.de.title : INTERPRETATION_GUIDE.en.title}
           </h3>
 
           {/* Structure Types */}
           <div>
-            <h4 className="text-lg font-semibold mb-4 text-gray-700">
+            <h4 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">
               {language === 'de' ? INTERPRETATION_GUIDE.de.structureTypes : INTERPRETATION_GUIDE.en.structureTypes}
             </h4>
             <div className="space-y-4">
-              {['hierarchical', 'nonHierarchical', 'kitchenTable', 'parallel', 'soloPoly'].map(style => {
+              {['openRelationship', 'swinging', 'hierarchicalPoly', 'nonHierarchicalPoly', 'polyfidelity', 'soloPoly', 'kitchenTable', 'parallelPoly', 'relationshipAnarchy'].map(style => {
                 const score = scores[style as keyof ScoreResult];
                 const guide = language === 'de' ? INTERPRETATION_GUIDE.de : INTERPRETATION_GUIDE.en;
                 const interpretation = guide.interpretations[style as keyof typeof guide.interpretations];
 
-                if (score >= 35 && interpretation) {
+                if (score >= 15 && interpretation) {
                   return (
-                    <div key={style} className="bg-blue-50 p-4 rounded-lg">
-                      <h5 className="font-semibold text-blue-900 mb-2">{interpretation.title}</h5>
-                      <p className="text-gray-700 mb-3">{interpretation.description}</p>
-                      <ul className="list-disc list-inside space-y-1 text-gray-600">
+                    <div key={style} className="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg">
+                      <h5 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">{interpretation.title}</h5>
+                      <p className="text-gray-700 dark:text-gray-300 mb-3">{interpretation.description}</p>
+                      <ul className="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400">
                         {interpretation.points.map((point, idx) => (
                           <li key={idx}>{point}</li>
                         ))}
@@ -483,21 +693,21 @@ export default function Quiz() {
 
           {/* Bonding Types */}
           <div>
-            <h4 className="text-lg font-semibold mb-4 text-gray-700">
-              {language === 'de' ? INTERPRETATION_GUIDE.de.bondingTypes : INTERPRETATION_GUIDE.en.bondingTypes}
+            <h4 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">
+              {language === 'de' ? 'Bindungstypen' : 'Bonding Types'}
             </h4>
             <div className="space-y-4">
-              {['relationshipEscalator', 'fluidBonding', 'saferSex'].map(style => {
+              {['fluidBonding', 'bodyFluidMonogamy', 'saferSexProtocols', 'nestingPartner', 'anchorPartner', 'abundanceMindset', 'scarcityMindset'].map(style => {
                 const score = scores[style as keyof ScoreResult];
                 const guide = language === 'de' ? INTERPRETATION_GUIDE.de : INTERPRETATION_GUIDE.en;
                 const interpretation = guide.interpretations[style as keyof typeof guide.interpretations];
 
-                if (score >= 35 && interpretation) {
+                if (score >= 10 && interpretation) {
                   return (
-                    <div key={style} className="bg-green-50 p-4 rounded-lg">
-                      <h5 className="font-semibold text-green-900 mb-2">{interpretation.title}</h5>
-                      <p className="text-gray-700 mb-3">{interpretation.description}</p>
-                      <ul className="list-disc list-inside space-y-1 text-gray-600">
+                    <div key={style} className="bg-green-50 dark:bg-green-900 p-4 rounded-lg">
+                      <h5 className="font-semibold text-green-900 dark:text-green-100 mb-2">{interpretation.title}</h5>
+                      <p className="text-gray-700 dark:text-gray-300 mb-3">{interpretation.description}</p>
+                      <ul className="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400">
                         {interpretation.points.map((point, idx) => (
                           <li key={idx}>{point}</li>
                         ))}
@@ -512,14 +722,14 @@ export default function Quiz() {
 
           {/* Reflection Questions */}
           <div>
-            <h4 className="text-lg font-semibold mb-4 text-gray-700">
+            <h4 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">
               {language === 'de' ? INTERPRETATION_GUIDE.de.reflectionTitle : INTERPRETATION_GUIDE.en.reflectionTitle}
             </h4>
-            <div className="bg-yellow-50 p-4 rounded-lg">
-              <p className="text-gray-700 mb-3">
+            <div className="bg-yellow-50 dark:bg-yellow-900 p-4 rounded-lg">
+              <p className="text-gray-700 dark:text-gray-300 mb-3">
                 {language === 'de' ? 'Basierend auf deinen Punktzahlen, überdenke:' : 'Based on your scores, consider:'}
               </p>
-              <ol className="list-decimal list-inside space-y-2 text-gray-600">
+              <ol className="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-400">
                 {(language === 'de' ? INTERPRETATION_GUIDE.de : INTERPRETATION_GUIDE.en).reflectionQuestions.map((question, idx) => (
                   <li key={idx}>{question}</li>
                 ))}
@@ -529,22 +739,22 @@ export default function Quiz() {
 
           {/* Next Steps */}
           <div>
-            <h4 className="text-lg font-semibold mb-4 text-gray-700">
+            <h4 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">
               {language === 'de' ? INTERPRETATION_GUIDE.de.nextStepsTitle : INTERPRETATION_GUIDE.en.nextStepsTitle}
             </h4>
             <div className="grid md:grid-cols-2 gap-4">
               {(language === 'de' ? INTERPRETATION_GUIDE.de : INTERPRETATION_GUIDE.en).nextSteps.map((step, idx) => (
-                <div key={idx} className="bg-gray-50 p-4 rounded-lg">
-                  <h5 className="font-semibold text-gray-900 mb-2">{step.title}:</h5>
-                  <p className="text-gray-600">{step.content}</p>
+                <div key={idx} className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                  <h5 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">{step.title}:</h5>
+                  <p className="text-gray-600 dark:text-gray-300">{step.content}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Reminder */}
-          <div className="bg-indigo-50 p-6 rounded-lg border-l-4 border-indigo-500">
-            <p className="text-gray-700 italic">
+          <div className="bg-indigo-50 dark:bg-indigo-900 p-6 rounded-lg border-l-4 border-indigo-500">
+            <p className="text-gray-700 dark:text-gray-300 italic">
               {language === 'de' ? INTERPRETATION_GUIDE.de.reminder : INTERPRETATION_GUIDE.en.reminder}
             </p>
           </div>

@@ -1,0 +1,15 @@
+{
+  "options": {
+    "de": ["Stimme überhaupt nicht zu", "Stimme nicht zu", "Neutral/Unsicher", "Stimme zu", "Stimme voll zu"],
+    "en": ["Strongly Disagree", "Disagree", "Neutral/Unsure", "Agree", "Strongly Agree"]
+  },
+  "scoringMap": {
+    "fluidBonding": [1, 3, 6, 7, 9, 12, 14],
+    "bodyFluidMonogamy": [1, 5, 10, 13],
+    "saferSexProtocols": [2, 4, 8, 10, 11, 15],
+    "nestingPartner": [3, 7, 12, 13],
+    "anchorPartner": [11, 12, 13, 15],
+    "abundanceMindset": [6, 9, 14],
+    "scarcityMindset": [5, 10, 15]
+  }
+}

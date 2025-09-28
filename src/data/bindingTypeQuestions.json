@@ -1,0 +1,17 @@
+[
+  { "id": 1, "textDE": "Ich möchte mit ausgewählten Partner(n) eine Fluid-Bindung eingehen (Körperflüssigkeiten ohne Barrieren teilen).", "textEN": "I want to fluid bond (share bodily fluids without barriers) with select partner(s).", "weight": 1 },
+  { "id": 2, "textDE": "Ich bevorzuge es, mit allen Partnern aus Sicherheitsgründen Barrieren zu verwenden.", "textEN": "I prefer using barriers with all partners for safety reasons.", "weight": 1 },
+  { "id": 3, "textDE": "Körperliche Berührung und Zuneigung sind meine primären Wege, Liebe zu zeigen.", "textEN": "Physical touch and affection are my primary ways of showing love.", "weight": 1 },
+  { "id": 4, "textDE": "Ich zeige Liebe mehr durch Taten, Worte oder gemeinsame Zeit als durch körperliche Berührung.", "textEN": "I show love more through actions, words, or quality time than physical touch.", "weight": 1 },
+  { "id": 5, "textDE": "Sexuelle Exklusivität mit einer Person fühlt sich natürlich und wichtig für mich an.", "textEN": "Sexual exclusivity with one person feels natural and important to me.", "weight": 1 },
+  { "id": 6, "textDE": "Ich genieße sexuelle Vielfalt und Erkundung mit mehreren Partnern.", "textEN": "I enjoy sexual variety and exploration with multiple partners.", "weight": 1 },
+  { "id": 7, "textDE": "Ich möchte regelmäßigen, häufigen sexuellen Kontakt mit meinem/meinen romantischen Partner(n).", "textEN": "I want regular, frequent sexual contact with my romantic partner(s).", "weight": 1 },
+  { "id": 8, "textDE": "Sexuelle Häufigkeit ist weniger wichtig als die Qualität der emotionalen Verbindung.", "textEN": "Sexual frequency is less important than emotional connection quality.", "weight": 1 },
+  { "id": 9, "textDE": "Gruppen-Sexerfahrungen sprechen mich an.", "textEN": "Group sexual experiences appeal to me.", "weight": 1 },
+  { "id": 10, "textDE": "Ich bevorzuge stark Eins-zu-Eins intime Begegnungen.", "textEN": "I strongly prefer one-on-one intimate encounters.", "weight": 1 },
+  { "id": 11, "textDE": "Emotionale Intimität ist wichtiger für mich als körperliche Intimität.", "textEN": "Emotional intimacy is more important to me than physical intimacy.", "weight": 1 },
+  { "id": 12, "textDE": "Körperliche und emotionale Intimität sind für mich gleich wichtig.", "textEN": "Physical and emotional intimacy are equally important to me.", "weight": 1 },
+  { "id": 13, "textDE": "Ich benötige eine tiefe emotionale Verbindung, bevor körperliche Intimität entstehen kann.", "textEN": "I need deep emotional connection before physical intimacy can develop.", "weight": 1 },
+  { "id": 14, "textDE": "Körperliche Anziehung kann unabhängig von emotionaler Verbindung entstehen.", "textEN": "Physical attraction can develop independently of emotional connection.", "weight": 1 },
+  { "id": 15, "textDE": "Ich bevorzuge längere Kennenlernphasen vor körperlicher Intimität.", "textEN": "I prefer longer getting-to-know-you periods before physical intimacy.", "weight": 1 }
+]

@@ -1,9 +1,17 @@
 {
-  "hierarchical": {
-    "de": "Hierarchische Polyamorie nutzt eine Struktur mit Ebenen - primäre, sekundäre und tertiäre Partner. Der Hauptpartner hat oft Vorrang bei Entscheidungen, Zeit und emotionalen Ressourcen.",
-    "en": "Hierarchical polyamory uses a tiered structure - primary, secondary, and tertiary partners. The primary partner often has priority in decisions, time, and emotional resources."
+  "openRelationship": {
+    "de": "Offene Beziehung erlaubt sexuelle Beziehungen außerhalb der primären Partnerschaft mit Fokus auf emotionale Exklusivität.",
+    "en": "Open relationship allows sexual relationships outside the primary partnership while maintaining emotional exclusivity."
   },
-  "nonHierarchical": {
+  "swinging": {
+    "de": "Swinging ist Freizeitsex mit anderen Paaren in sozialen oder Gruppeneinstellungen ohne emotionale Bindung.",
+    "en": "Swinging is recreational sex with other couples in social or group settings without emotional attachment."
+  },
+  "hierarchicalPoly": {
+    "de": "Hierarchische Polyamorie nutzt eine Struktur mit Ebenen - primäre, sekundäre und tertiäre Partner mit festgelegten Prioritäten.",
+    "en": "Hierarchical polyamory uses a tiered structure - primary, secondary, and tertiary partners with established priorities."
+  },
+  "nonHierarchicalPoly": {
     "de": "Nicht-hierarchische Polyamorie behandelt alle Partner als gleichwertig, ohne festgelegte Rangordnung. Jede Beziehung entwickelt sich organisch nach ihren eigenen Bedürfnissen.",
     "en": "Non-hierarchical polyamory treats all partners as equals without predetermined ranking. Each relationship develops organically based on its own needs."
   },
@@ -11,7 +19,11 @@
     "de": "Küchentisch-Polyamorie bedeutet, dass alle Partner sich kennen und gemeinsam Zeit verbringen können - wie eine erweiterte Familie am Küchentisch.",
     "en": "Kitchen table polyamory means all partners know each other and can spend time together comfortably - like an extended family gathering around the kitchen table."
   },
-  "parallel": {
+  "polyfidelity": {
+    "de": "Polyfidelität ist eine geschlossene Gruppe, in der alle Partner nur innerhalb der etablierten Gruppe intim sind.",
+    "en": "Polyfidelity is a closed group where all partners remain intimate only within the established group."
+  },
+  "parallelPoly": {
     "de": "Parallele Polyamorie hält Beziehungen getrennt. Partner wissen voneinander, haben aber wenig bis keinen Kontakt miteinander.",
     "en": "Parallel polyamory keeps relationships separate. Partners know about each other but have little to no contact with one another."
   },
@@ -19,16 +31,36 @@
     "de": "Solo-Polyamorie priorisiert persönliche Autonomie. Man hat mehrere Beziehungen, behält aber die eigene Unabhängigkeit ohne Verschmelzung mit Partnern.",
     "en": "Solo polyamory prioritizes personal autonomy. You maintain multiple relationships while preserving independence without merging lives with partners."
   },
-  "relationshipEscalator": {
-    "de": "Die Beziehungsrolltreppe folgt traditionellen Meilensteinen: Dating, Exklusivität, Zusammenziehen, Heirat, Kinder. In Polyamorie oft mit dem Hauptpartner.",
-    "en": "The relationship escalator follows traditional milestones: dating, exclusivity, moving in, marriage, children. In polyamory, often with a primary partner."
+  "relationshipAnarchy": {
+    "de": "Beziehungsanarchie lehnt gesellschaftliche Konstrukte und Hierarchien ab, lässt Beziehungen ohne vorgegebene Regeln entstehen.",
+    "en": "Relationship anarchy rejects social constructs and hierarchies, letting relationships develop without predetermined rules."
   },
   "fluidBonding": {
     "de": "Fluid-Bindung bezeichnet das Teilen von Körperflüssigkeiten ohne Barrieren mit ausgewählten Partnern, oft als Zeichen besonderer Intimität und Vertrauen.",
     "en": "Fluid bonding refers to sharing bodily fluids without barriers with select partners, often as a sign of special intimacy and trust."
   },
-  "saferSex": {
-    "de": "Safer-Sex-Praktiken nutzen konsequent Barrieren und Schutzmaßnahmen mit allen Partnern zur Minimierung von STI-Risiken und zum Schutz aller Beteiligten.",
-    "en": "Safer sex practices consistently use barriers and protective measures with all partners to minimize STI risks and protect everyone involved."
+  "bodyFluidMonogamy": {
+    "de": "Körperflüssigkeit-Monogamie begrenzt den Austausch von Körperflüssigkeiten auf bestimmte Partner während andere Schutz verwenden.",
+    "en": "Body fluid monogamy limits bodily fluid exchange to specific partners while using protection with others."
+  },
+  "saferSexProtocols": {
+    "de": "Safer-Sex-Protokolle nutzen konsequent Barrieren und Schutzmaßnahmen mit allen Partnern zur Minimierung von STI-Risiken.",
+    "en": "Safer sex protocols consistently use barriers and protective measures with all partners to minimize STI risks."
+  },
+  "nestingPartner": {
+    "de": "Nesting-Partner sind Partner, mit denen du zusammenlebst und den Alltag teilst, unabhängig von Hierarchie.",
+    "en": "Nesting partners are partners you live with and share daily life, regardless of hierarchy."
+  },
+  "anchorPartner": {
+    "de": "Anker-Partner bieten emotionale Erdung und langfristige Partnerschaft für Stabilität und Sicherheit.",
+    "en": "Anchor partners provide emotional grounding and long-term partnership for stability and security."
+  },
+  "abundanceMindset": {
+    "de": "Fülle-Mentalität sieht Liebe als unbegrenzte Ressource, die durch Teilen wächst und sich vermehrt.",
+    "en": "Abundance mindset sees love as an unlimited resource that grows and multiplies through sharing."
+  },
+  "scarcityMindset": {
+    "de": "Knappheits-Mentalität sieht Liebe als begrenzte Ressource, die zwischen Partnern aufgeteilt werden muss.",
+    "en": "Scarcity mindset sees love as a limited resource that must be divided between partners."
   }
 }
