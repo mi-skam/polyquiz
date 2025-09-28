@@ -1,4 +1,4 @@
-#!/usr/bin/env -S deno run --allow-run --allow-write --allow-read
+#!/usr/bin/env bash
 
 import { dirname, join } from "https://deno.land/std@0.208.0/path/mod.ts";
 
@@ -15,7 +15,7 @@ async function runCommand(cmd: string[]): Promise<string> {
     }
     return new TextDecoder().decode(stdout).trim();
   } catch (error) {
-    throw new Error(`Command failed: ${cmd.join(" ")} - ${error.message}`);
+    throw new Error(`Command failed: ${cmd.join(" ")} - ${error instanceof Error ? error.message : String(error)}`);
   }
 }
 
@@ -93,7 +93,7 @@ async function generateVersion() {
 
     return versionInfo;
   } catch (error) {
-    console.error("Error generating version:", error.message);
+    console.error("Error generating version:", error instanceof Error ? error.message : String(error));
 
     // Fallback version for non-git environments
     const fallbackVersion = {

@@ -9,7 +9,7 @@ import questionsData from './data/questions.json' with { type: "json" };
 import interpretationGuideData from './data/interpretationGuide.json' with { type: "json" };
 import styleDescriptionsData from './data/styleDescriptions.json' with { type: "json" };
 import configData from './data/config.json' with { type: "json" };
-import versionData from './version.json' with { type: "json" };
+import VersionInfo from './components/VersionInfo';
 
 interface Question {
   id: number;
@@ -192,18 +192,6 @@ export default function Quiz() {
 
   const toggleLanguage = () => setLanguage(prev => prev === 'de' ? 'en' : 'de');
 
-  const VersionInfo = () => (
-    <div className="text-xs text-gray-400 text-center mt-4 border-t pt-2">
-      <span>v{versionData.version}</span>
-      {versionData.buildType === 'development' && (
-        <span className="ml-2 text-orange-500">({versionData.buildType})</span>
-      )}
-      {versionData.isDirty && (
-        <span className="ml-1 text-red-500">*</span>
-      )}
-    </div>
-  );
-
   if (step === 'landing') {
     return (
       <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
@@ -298,6 +286,7 @@ export default function Quiz() {
             {language === 'de' ? 'Weiter' : 'Next'}
           </button>
         </div>
+        <VersionInfo />
       </div>
     );
   }
@@ -335,6 +324,7 @@ export default function Quiz() {
         >
           {language === 'de' ? 'Auswertung anzeigen' : 'Show Results'}
         </button>
+        <VersionInfo />
       </div>
     );
   }

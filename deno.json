@@ -4,7 +4,8 @@
     "build": "deno run -A npm:vite build",
     "preview": "deno run -A npm:vite preview",
     "install": "deno cache --node-modules-dir npm:react npm:react-dom npm:vite npm:@vitejs/plugin-react npm:tailwindcss npm:autoprefixer npm:postcss",
-    "deploy": "deno run -A npm:gh-pages -d dist"
+    "deploy": "deno run -A npm:gh-pages -d dist",
+    "version": "deno run -A scripts/generate-version.ts"
   },
   "nodeModulesDir": "auto",
   "compilerOptions": {
