@@ -1,0 +1,194 @@
+{
+  "de": {
+    "title": "Interpretationsanleitung",
+    "structureTypes": "Beziehungsstruktur-Typen:",
+    "bondingTypes": "Bindungs- & Verpflichtungstypen:",
+    "reflectionTitle": "Reflexionsfragen",
+    "nextStepsTitle": "Nächste Schritte",
+    "reminder": "Denke daran: Diese Ergebnisse sind ein Ausgangspunkt für Selbstreflexion, keine definitiven Etiketten. Viele Menschen praktizieren Hybridansätze oder entwickeln sich zwischen Stilen im Laufe der Zeit. Der wichtigste Faktor ist bewusste Wahl und ethische Behandlung aller Beteiligten.",
+    "interpretations": {
+      "hierarchical": {
+        "title": "Hierarchische Polyamorie (35+ Punkte):",
+        "description": "Du entwickelst dich wahrscheinlich gut mit klaren Beziehungshierarchien, Hauptpartnerschaften und strukturierten Verpflichtungen. Erwäge zu erforschen:",
+        "points": [
+          "Primär/Sekundär-Beziehungsmodelle",
+          "Nistpartnerschaften mit Anker-Bindungen",
+          "Traditionelle Eskalationsmuster angepasst für mehrere Beziehungen"
+        ]
+      },
+      "nonHierarchical": {
+        "title": "Nicht-Hierarchische Polyamorie (35+ Punkte):",
+        "description": "Du bevorzugst Gleichberechtigung unter Beziehungen und widersetzte dich auferlegten Hierarchien. Erwäge zu erforschen:",
+        "points": [
+          "Beziehungsanarchie-Prinzipien",
+          "Einvernehmliche Nicht-Hierarchie",
+          "Organische Beziehungsentwicklung"
+        ]
+      },
+      "kitchenTable": {
+        "title": "Küchentisch-Polyamorie (35+ Punkte):",
+        "description": "Du genießt miteinander verbundene Beziehungen und Gemeinschaft. Erwäge zu erforschen:",
+        "points": [
+          "Polykules mit hoher Integration",
+          "Gruppenaktivitäten und geteilte soziale Kreise",
+          "Metamour-Freundschaften und familienähnliche Verbindungen"
+        ]
+      },
+      "parallel": {
+        "title": "Parallele Polyamorie (35+ Punkte):",
+        "description": "Du bevorzugst unabhängige Beziehungen mit minimaler Überschneidung. Erwäge zu erforschen:",
+        "points": [
+          "Abgeteilte Beziehungen",
+          "\"Frag nicht, erzähl nicht\"-Arrangements (mit ethischen Modifikationen)",
+          "Unabhängiges Dating mit Respekt für Metamours"
+        ]
+      },
+      "soloPoly": {
+        "title": "Solo-Polyamorie (35+ Punkte):",
+        "description": "Du priorisierst Autonomie und widersetzte dich traditioneller Beziehungseskalation. Erwäge zu erforschen:",
+        "points": [
+          "Allein leben während mehrere Verbindungen aufrechterhalten werden",
+          "Nicht-eskalierende Beziehungen",
+          "Hauptpartnerschaft mit dir selbst"
+        ]
+      },
+      "relationshipEscalator": {
+        "title": "Hohe Beziehungsrolltreppe (35+ Punkte):",
+        "description": "Du fühlst dich zu traditionellen Beziehungsmeilensteinen hingezogen. Erwäge zu erforschen:",
+        "points": [
+          "Hauptpartnerschaften mit ehe-ähnlichen Verpflichtungen",
+          "Geteiltes Wohnen, Finanzen und Lebensplanung",
+          "Familiengründung innerhalb polyamorer Strukturen"
+        ]
+      },
+      "fluidBonding": {
+        "title": "Fluid-Bindungs-Affinität (35+ Punkte):",
+        "description": "Du fühlst dich zu intimen körperlichen und emotionalen Bindungen hingezogen. Erwäge zu erforschen:",
+        "points": [
+          "Fluid-Bindungs-Vereinbarungen mit ausgewählten Partnern",
+          "Hohe körperliche Intimität und Präsenz",
+          "Traditionelle romantische Ausdrücke angepasst für mehrere Beziehungen"
+        ]
+      },
+      "saferSex": {
+        "title": "Safer-Sex-Fokus (35+ Punkte):",
+        "description": "Du priorisierst Sicherheit, Grenzen und Unabhängigkeit. Erwäge zu erforschen:",
+        "points": [
+          "Umfassende Safer-Sex-Protokolle",
+          "Emotionale Regulationstechniken",
+          "Unabhängige Verarbeitungs- und Unterstützungssysteme"
+        ]
+      }
+    },
+    "reflectionQuestions": [
+      "Welcher Stil/welche Stile haben bei dir am höchsten abgeschnitten? Wie passt das zu deinen aktuellen Beziehungserfahrungen?",
+      "Gibt es bedeutende Unterschiede zwischen dem, was du hoch bewertet hast, und wie du derzeit Beziehungen praktizierst?",
+      "Welche Aspekte deiner niedriger bewerteten Stile sprechen dich trotzdem an? Wie könntest du sie einbauen?",
+      "Wie passen deine Bindungspräferenzen zu deinen strukturellen Präferenzen?",
+      "Was würdest du brauchen, um dich sicher und erfüllt zu fühlen beim Erforschen deines höchstbewerteten Beziehungsstils?"
+    ],
+    "nextSteps": [
+      { "title": "Recherche", "content": "Lies mehr über deine höchstbewerteten Stile in \"The Ethical Slut\" und anderen Polyamorie-Ressourcen" },
+      { "title": "Kommunikation", "content": "Diskutiere deine Ergebnisse mit aktuellen oder potenziellen Partnern" },
+      { "title": "Experimentieren", "content": "Versuche, Elemente deiner bevorzugten Stile schrittweise einzubauen" },
+      { "title": "Unterstützung", "content": "Erwäge, Gemeinschaften beizutreten oder Beratung zu suchen, die sich auf deinen Beziehungsstil spezialisiert" },
+      { "title": "Wiederholen", "content": "Nimm dieses Assessment regelmäßig erneut, während du wächst und dich veränderst" }
+    ]
+  },
+  "en": {
+    "title": "Interpretation Guide",
+    "structureTypes": "Relationship Structure Types:",
+    "bondingTypes": "Bonding & Commitment Types:",
+    "reflectionTitle": "Reflection Questions",
+    "nextStepsTitle": "Next Steps",
+    "reminder": "Remember: These results are a starting point for self-reflection, not definitive labels. Many people practice hybrid approaches or evolve between styles over time. The most important factor is conscious choice and ethical treatment of all involved.",
+    "interpretations": {
+      "hierarchical": {
+        "title": "Hierarchical Polyamory (35+ points):",
+        "description": "You likely thrive with clear relationship hierarchies, primary partnerships, and structured commitments. Consider exploring:",
+        "points": [
+          "Primary/secondary relationship models",
+          "Nesting partnerships with anchor bonds",
+          "Traditional escalation patterns adapted for multiple relationships"
+        ]
+      },
+      "nonHierarchical": {
+        "title": "Non-Hierarchical Polyamory (35+ points):",
+        "description": "You prefer equality among relationships and resist imposed hierarchies. Consider exploring:",
+        "points": [
+          "Relationship anarchy principles",
+          "Consensual non-hierarchy",
+          "Organic relationship development"
+        ]
+      },
+      "kitchenTable": {
+        "title": "Kitchen Table Polyamory (35+ points):",
+        "description": "You enjoy interconnected relationships and community. Consider exploring:",
+        "points": [
+          "Polycules with high integration",
+          "Group activities and shared social circles",
+          "Metamour friendships and family-style connections"
+        ]
+      },
+      "parallel": {
+        "title": "Parallel Polyamory (35+ points):",
+        "description": "You prefer independent relationships with minimal overlap. Consider exploring:",
+        "points": [
+          "Compartmentalized relationships",
+          "Don't Ask, Don't Tell arrangements (with ethical modifications)",
+          "Independent dating with respect for metamours"
+        ]
+      },
+      "soloPoly": {
+        "title": "Solo Polyamory (35+ points):",
+        "description": "You prioritize autonomy and resist traditional relationship escalation. Consider exploring:",
+        "points": [
+          "Living alone while maintaining multiple connections",
+          "Non-escalating relationships",
+          "Primary partnership with yourself"
+        ]
+      },
+      "relationshipEscalator": {
+        "title": "High Relationship Escalator (35+ points):",
+        "description": "You're drawn to traditional relationship milestones. Consider exploring:",
+        "points": [
+          "Primary partnerships with marriage-like commitments",
+          "Shared living, finances, and life planning",
+          "Family-building within polyamorous structures"
+        ]
+      },
+      "fluidBonding": {
+        "title": "Fluid Bonding Affinity (35+ points):",
+        "description": "You're drawn to intimate physical and emotional bonds. Consider exploring:",
+        "points": [
+          "Fluid bonding agreements with select partners",
+          "High physical intimacy and presence",
+          "Traditional romantic expressions adapted for multiple relationships"
+        ]
+      },
+      "saferSex": {
+        "title": "Safer Sex Focus (35+ points):",
+        "description": "You prioritize safety, boundaries, and independence. Consider exploring:",
+        "points": [
+          "Comprehensive safer sex protocols",
+          "Emotional regulation techniques",
+          "Independent processing and support systems"
+        ]
+      }
+    },
+    "reflectionQuestions": [
+      "Which style(s) scored highest for you? How does this align with your current relationship experiences?",
+      "Are there significant differences between what you scored high on and how you currently practice relationships?",
+      "What aspects of your lower-scoring styles still appeal to you? How might you incorporate them?",
+      "How do your bonding preferences align with your structural preferences?",
+      "What would you need to feel safe and fulfilled exploring your highest-scoring relationship style?"
+    ],
+    "nextSteps": [
+      { "title": "Research", "content": "Read more about your highest-scoring styles in \"The Ethical Slut\" and other polyamory resources" },
+      { "title": "Communicate", "content": "Discuss your results with current or potential partners" },
+      { "title": "Experiment", "content": "Try incorporating elements of your preferred styles gradually" },
+      { "title": "Support", "content": "Consider joining communities or seeking counseling that specializes in your relationship style" },
+      { "title": "Revisit", "content": "Retake this assessment periodically as you grow and change" }
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "hierarchical": {
+    "de": "Hierarchische Polyamorie nutzt eine Struktur mit Ebenen - primäre, sekundäre und tertiäre Partner. Der Hauptpartner hat oft Vorrang bei Entscheidungen, Zeit und emotionalen Ressourcen.",
+    "en": "Hierarchical polyamory uses a tiered structure - primary, secondary, and tertiary partners. The primary partner often has priority in decisions, time, and emotional resources."
+  },
+  "nonHierarchical": {
+    "de": "Nicht-hierarchische Polyamorie behandelt alle Partner als gleichwertig, ohne festgelegte Rangordnung. Jede Beziehung entwickelt sich organisch nach ihren eigenen Bedürfnissen.",
+    "en": "Non-hierarchical polyamory treats all partners as equals without predetermined ranking. Each relationship develops organically based on its own needs."
+  },
+  "kitchenTable": {
+    "de": "Küchentisch-Polyamorie bedeutet, dass alle Partner sich kennen und gemeinsam Zeit verbringen können - wie eine erweiterte Familie am Küchentisch.",
+    "en": "Kitchen table polyamory means all partners know each other and can spend time together comfortably - like an extended family gathering around the kitchen table."
+  },
+  "parallel": {
+    "de": "Parallele Polyamorie hält Beziehungen getrennt. Partner wissen voneinander, haben aber wenig bis keinen Kontakt miteinander.",
+    "en": "Parallel polyamory keeps relationships separate. Partners know about each other but have little to no contact with one another."
+  },
+  "soloPoly": {
+    "de": "Solo-Polyamorie priorisiert persönliche Autonomie. Man hat mehrere Beziehungen, behält aber die eigene Unabhängigkeit ohne Verschmelzung mit Partnern.",
+    "en": "Solo polyamory prioritizes personal autonomy. You maintain multiple relationships while preserving independence without merging lives with partners."
+  },
+  "relationshipEscalator": {
+    "de": "Die Beziehungsrolltreppe folgt traditionellen Meilensteinen: Dating, Exklusivität, Zusammenziehen, Heirat, Kinder. In Polyamorie oft mit dem Hauptpartner.",
+    "en": "The relationship escalator follows traditional milestones: dating, exclusivity, moving in, marriage, children. In polyamory, often with a primary partner."
+  },
+  "fluidBonding": {
+    "de": "Fluid-Bindung bezeichnet das Teilen von Körperflüssigkeiten ohne Barrieren mit ausgewählten Partnern, oft als Zeichen besonderer Intimität und Vertrauen.",
+    "en": "Fluid bonding refers to sharing bodily fluids without barriers with select partners, often as a sign of special intimacy and trust."
+  },
+  "saferSex": {
+    "de": "Safer-Sex-Praktiken nutzen konsequent Barrieren und Schutzmaßnahmen mit allen Partnern zur Minimierung von STI-Risiken und zum Schutz aller Beteiligten.",
+    "en": "Safer sex practices consistently use barriers and protective measures with all partners to minimize STI risks and protect everyone involved."
+  }
+}
