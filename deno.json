@@ -6,7 +6,7 @@
     "install": "deno cache --node-modules-dir npm:react npm:react-dom npm:vite npm:@vitejs/plugin-react npm:tailwindcss npm:autoprefixer npm:postcss",
     "deploy": "deno run -A npm:gh-pages -d dist"
   },
-  "nodeModulesDir": true,
+  "nodeModulesDir": "auto",
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "react"

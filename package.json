@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/generate-version.js && tsc && vite build",
+    "build": "deno run --allow-run --allow-write --allow-read scripts/generate-version.ts && tsc && vite build",
     "preview": "vite preview",
-    "version": "node scripts/generate-version.js"
+    "version": "deno run --allow-run --allow-write --allow-read scripts/generate-version.ts"
   },
   "dependencies": {
     "react": "^18.2.0",
