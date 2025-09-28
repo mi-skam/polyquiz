@@ -1,7 +1,7 @@
 {
-  "version": "v1.0.0-dev.6+30f86ef-dirty",
-  "commitHash": "30f86ef",
-  "buildType": "development",
-  "buildTime": "2025-09-28T19:19:38.909Z",
-  "isDirty": true
+  "version": "v1.1",
+  "commitHash": "54c4876",
+  "buildType": "release",
+  "buildTime": "2025-09-28T19:23:17.946Z",
+  "isDirty": false
 }
