@@ -13,6 +13,7 @@ import polyTypeConfigData from './data/polyTypeConfig.json' with { type: "json" 
 import bindingTypeConfigData from './data/bindingTypeConfig.json' with { type: "json" };
 import VersionInfo from './components/VersionInfo';
 import ThemeToggle from './components/ThemeToggle';
+import ShareButton from './components/ShareButton';
 
 interface Question {
   id: number;
@@ -566,7 +567,7 @@ export default function Quiz() {
         </div>
       </div>
 
-      <div className="text-center mb-6">
+      <div id="quiz-results" className="text-center mb-6">
         <div className="inline-flex items-center justify-center w-32 h-32 bg-gradient-to-br from-blue-100 to-green-100 dark:from-blue-900 dark:to-green-900 rounded-full mb-4">
           <span className="text-sm font-bold text-blue-600 dark:text-blue-300 text-center px-2">{interpretation.level}</span>
         </div>
@@ -634,6 +635,15 @@ export default function Quiz() {
             );
           })}
         </div>
+      </div>
+
+      <div className="mb-6">
+        <ShareButton 
+          language={language} 
+          resultLevel={interpretation.level} 
+          resultAdvice={language === 'de' ? interpretation.adviceDE : interpretation.adviceEN}
+          scores={scores}
+        />
       </div>
 
       <div className="flex gap-4 mb-6">
